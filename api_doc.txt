@@ -1,0 +1,95 @@
+## Documentation: https://awis.alexa.com/developer-guide ##
+
+# Sample Query Request
+
+# https://awis.api.alexa.com/api?
+#   Action=UrlInfo
+#   &ResponseGroup=Rank
+#   &Url=yahoo.com
+
+
+# Required HTTP Headers:
+
+# Accept: application/xml
+# x-api-key: "YOUR_API_KEY"
+
+
+#Actions = [UrlInfo, TrafficHistory, CategoryBrowse, CategoryListings, SitesLinkingIn]
+
+# Parameters for ACTION ** UrlInfo ** :
+    # ResponseGroup	Any valid response group, see below for valid options. (REQUIRED)
+
+# Response groups available for ACTION ** UrlInfo ** :
+    # Rank	The Alexa three month average traffic rank
+    # RankByCountry	Percentage of viewers, pageviews, and traffic rank broken out by country
+    # UsageStats	Usage statistics such as reach and pageviews
+    # AdultContent	Whether the site is likely to contain adult content ('yes' or 'no')
+    # Speed	Median load time and percent of known sites that are slower
+    # Language	Content language code and character-encoding (note that this may not match the language or character encoding of any given page on the website because the language and character set returned are those of the majority of pages)
+    # LinksInCount	A count of links pointing in to this site
+    # SiteData	Title, description, and date the site was created
+    # Categories	Up to 3 categories the site belongs to
+
+# PLUS THE META-RESPONSE BELOW (these group together several similar above response groups):
+    # Response Group	Data Returned
+    # TrafficData	Traffic rank and usage statistics (equivalent to ResponseGroup=Rank,UsageStats)
+    # ContentData	Information about the site's content (equivalent to ResponseGroup=SiteData,AdultContent,
+        # Speed,Language,LinksInCount)
+
+# Request example for ACTION ** UrlInfo ** :
+#https://awis.api.alexa.com/api?Action=urlInfo&ResponseGroup=Rank&Url=sfgate.com
+
+
+# Parameters for ACTION ** TrafficHistory ** :
+    # Range	Number of days to return. Note that the response document may contain fewer results than this 
+        #maximum if data is not available. Default value is '31'. Maximum value is '31'.
+    # ResponseGroup	History is the only available response group.(REQUIRED)
+    # Start	Start date for results. A date within the last 4 years in format YYYYMMDD.
+    # Url	Any valid URL. (REQUIRED)
+
+# Request example for ACTION ** TrafficHistory ** :
+#https://awis.api.alexa.com/api?Action=TrafficHistory&Range=5&ResponseGroup=History&Url=sfgate.com
+
+
+# Parameters for ACTION ** CategoryBrowse ** :
+    # Descriptions	Whether to return descriptions with categories: (True | False)
+    # Path	Valid category path (Top/Arts, Top/Business/Automotive) (REQUIRED)
+    # ResponseGroup	Any valid response group, see below for valid options.(REQUIRED)
+
+# Response groups available for ACTION ** CategoryBrowse ** :
+    # Categories	All sub-categories within the specified category path
+    # RelatedCategories	Categories that are related to the specified category path
+    # LanguageCategories	Language categories in which the specified category path is available
+    # LetterBars	"Letter Bars" (A, B, C, etc.) for categories that contain them
+
+# Request example for ACTION ** CategoryBrowse ** :
+#https://awis.api.alexa.com/api?Action=CategoryBrowse&Descriptions=True&Path=Top/Arts/Video&ResponseGroup=Categories
+
+
+# Parameters for ACTION ** CategoryListings ** :
+    # Count	Number of results to return for this request, beginning from the specified Start number (maximum 20).
+    # Descriptions	Whether to return descriptions with categories: (True | False).
+    # Path	Valid category path. Note that top-level categories will not return any listings 
+        # unless Recursive=yes is specified. Example values are Top/Arts, Top/Business/Automotive. Note that 
+        # the value should be URL-encoded. 
+        # For example: Path=Top%2FBusiness%2FConsumer_Goods_and_Services%2FElectronics (REQUIRED)
+    # Recursive	Whether to return listings for the current category only, or for the current category plus all 
+        # subcategories: (True | False).
+    # ResponseGroup	Listings is the only available response group. (REQUIRED)
+    # SortBy	How to sort the results returned by this service: ( Popularity | Title | AverageReview ).
+    # Start	1-based index of result at which to start. Note: An empty document will be returned if this value 
+        # exceeds the total number of available results.
+
+# Request example for ACTION ** CategoryListings ** :
+#https://awis.api.alexa.com/api?Action=CategoryListings&Count=5&Descriptions=True&Path=Top%2FArts%2FVideo&ResponseGroup=Listings
+
+
+# Parameters for ACTION ** SitesLinkingIn ** :
+    # Count	Maximum number of results per page to return. Note that the response document may contain fewer 
+        # results than this maximum. Default value is '10' (maximum 20).
+    # ResponseGroup	SitesLinkingIn is the only available response group. (REQUIRED)
+    # Start	Number of results at which to start. Used for paging through results. Default value is '0.'
+    # Url	Any valid URL.(REQUIRED)
+
+# Request example for ACTION ** SitesLinkingIn ** :
+# https://awis.api.alexa.com/api?Action=SitesLinkingIn&Count=5&ResponseGroup=SitesLinkingIn&Url=sfgate.com
